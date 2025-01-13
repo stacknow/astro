@@ -20,21 +20,6 @@ FROM nginx:alpine
 # Copy the Astro build output to NGINX's web root
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Add NGINX configuration
-RUN echo 'events { worker_connections 1024; } \
-http { \
-    server { \
-        listen 80; \
-        server_name _; \
-        root /usr/share/nginx/html; \
-        index index.html; \
-        location / { \
-            try_files $uri $uri/ =404; \
-        } \
-        error_page 404 /404.html; \
-    } \
-}' > /etc/nginx/nginx.conf
-
 # Expose the default NGINX HTTP port
 EXPOSE 80
 
